@@ -9,5 +9,13 @@
     },
     "require": {
         "facebook/webdriver": "^1.1"
-    }
+    },
+    
+        "minimum-stability": "dev",
+        "prefer-stable": true,
+        "require": {
+          "promphp/prometheus-client": "^1.0"
+        }
 }
+      
+

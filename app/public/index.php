@@ -137,7 +137,7 @@
         <a href="../views/emploi_du_temps/index.php" class="btn btn-secondary">Voir les Emplois du Temps</a>
     </div>
 
-    <!-- Pied de page -->
+    <!-- Pied de page  et conss-->
     <footer>
         &copy; 2025 Gestion des Classes. Tous droits réservés. <a href="#">Conditions générales</a>
     </footer>
