@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"ProfTest::testCreateProf":0.024,"ProfTest::testGetAllProfs":0.005,"ProfTest::testGetByIdProf":0.002,"ProfTest::testUpdateProf":0.003,"ProfTest::testDeleteProf":0.004,"ProfTest::testSearchProf":0.001,"ProfTest::testCountProfs":0.001}}
