@@ -1,0 +1,26 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.Anubis77@ }}" | docker login -u "${{ secrets.seckamadou }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t amedoux/gestion_etablissement:v1.0.0 .
+
+      - name: Push Docker image
+        run: docker push amedoux/gestion_etablissement:v1.0.0
+
+      - name: Deploy on Server
+        run: |
+          ssh user@server "docker pull amedoux/gestion_etablissement:v1.0.0 && docker run -d -p 80:80 amedoux/gestion_etablissement:v1.0.0"

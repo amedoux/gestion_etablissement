@@ -1,0 +1,17 @@
+actor: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: 'http://localhost/gestion_etablissement'  # Assure-toi que l'URL de ton application est correcte
+            browser: chrome  # Utilisation de Chrome, tu peux aussi utiliser firefox ou autre si nécessaire
+            window_size: maximize  # Ouvre le navigateur en plein écran
+            capabilities:
+                - 'chromeOptions':  # Options spécifiques pour Chrome
+                    args:
+                        - '--headless'  # Pour lancer Chrome en mode sans tête (facultatif)
+        - \Helper\Acceptance
+
+step_decorators:
+    - Codeception\Step\Retry  # Pour réessayer une étape échouée (utile pour les tests avec des instabilités réseau ou de performances)
+    - Codeception\Step\TryTo  # Permet d'essayer une étape sans échouer si elle ne réussit pas
+    - Codeception\Step\ConditionalAssertion  # Permet de faire des assertions conditionnelles
