@@ -1,4 +1,4 @@
-name: Deploy App
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,21 +6,39 @@ on:
       - master
 
 jobs:
-  deploy:
+  build-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.Anubis77@ }}" | docker login -u "${{ secrets.seckamadou }}" --password-stdin
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, ctype, iconv, pdo_mysql
+          tools: composer, phpunit
 
-      - name: Build Docker image
-        run: docker build -t amedoux/gestion_etablissement:v1.0.0 .
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
 
-      - name: Push Docker image
-        run: docker push amedoux/gestion_etablissement:v1.0.0
+      - name: Run unit tests
+        run: vendor/bin/phpunit --testdox
 
-      - name: Deploy on Server
-        run: |
-          ssh user@server "docker pull amedoux/gestion_etablissement:v1.0.0 && docker run -d -p 80:80 amedoux/gestion_etablissement:v1.0.0"
+  # deploy:
+  #   needs: build-and-test
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Log in to Docker Hub
+  #       run: echo "${{ secrets.seckamadou }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+  #     - name: Build Docker image
+  #       run: docker build -t seckamadou/gestion_etablissement:v1.0.0 .
+
+  #     - name: Push Docker image
+  #       run: docker push seckamadou/gestion_etablissement:v1.0.0
